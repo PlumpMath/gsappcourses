@@ -251,7 +251,7 @@ caption {
 <?php
 $dataurl = "http://www.arch.columbia.edu/courses/course-schedule/spring";
 //print $md5str;
-include("simple_html_dom.php");
+include("include/simple_html_dom.php");
 ?>
 <div id="wrapper">
 <div id="sidebar" class=checkboxes>
