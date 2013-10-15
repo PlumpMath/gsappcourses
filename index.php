@@ -223,7 +223,7 @@ caption {
 	padding-left: 100px;
 }
 
-#sidebar {width:90px; padding:5px; position:fixed; left:0; top:0; background-color: white}
+#sidebar {width:90px; padding:5px; position:fixed; left:0; top:100; background-color: white}
 
 :checked + span {
 	font-weight: bold;
@@ -246,12 +246,29 @@ caption {
 </style>
 
 </head>
-<body>
-<base target="_new">
+<?php $thisurl = $_SERVER['REQUEST_URI']; ?>
 <?php
-$dataurl = "http://www.arch.columbia.edu/courses/course-schedule/spring";
 //print $md5str;
 include("include/simple_html_dom.php");
+if(!isset($_GET["url"]))  {
+	$dataurl = null;
+} else {
+	$dataurl = $_GET["url"];
+}
+?>
+
+<body>
+<base target="_new">
+<h2>Dan's GSAPP COURSE SCHEDULE PARSER - v0.0.1 super rough</h2>
+<form action="index.php" method="get">
+GSAPP course URL (example: <a href="<?php print $thisurl; ?>?url=http://www.arch.columbia.edu/courses/course-schedule/spring">http://www.arch.columbia.edu/courses/course-schedule/spring)</a><br>
+<input size=100 type="text" name="url" <?php if($dataurl) print "value='$dataurl'"; ?>>
+<input type="submit" value="Submit">
+</form>
+<?php
+//print $md5str;
+if($dataurl) {
+print $dataurl;
 ?>
 <div id="wrapper">
 <div id="sidebar" class=checkboxes>
@@ -266,9 +283,6 @@ include("include/simple_html_dom.php");
 </div>
 
 <div id="content" class="alltables">
-<h2>Dan's GSAPP COURSE SCHEDULE - SPRING 2013</h2>
-<h3>Updated LIVE from http://www.arch.columbia.edu/courses/course-schedule/spring-2013</h3>
-<h4>(The visualization may have a few errors, since the page is scraping/parsing/visualizing on-the-fly --- but the data in the main table is identical)</h4>
 
 <?php 
 $html = file_get_html($dataurl);
@@ -276,6 +290,7 @@ $html = file_get_html($dataurl);
 foreach($html->find('[id=mytable]') as $element) 
        echo $element . '<br>';
 
+}
 
 ?>
 </div>
