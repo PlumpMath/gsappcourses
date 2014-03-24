@@ -17,9 +17,9 @@ $(document).ready(function() {
 		thistime.parent("tr").append(processTime(thistime.html()));
 	});
 
-	$("#mytable tr").click(function() {
-		$(this).toggleClass("grayout");
-	});
+//	$("#mytable tr").click(function() {
+//		$(this).toggleClass("grayout");
+//	});
 	$("input").click(function() {
 			var datename = $(this).attr("name");
 			var waschecked = this.checked;
@@ -29,17 +29,21 @@ $(document).ready(function() {
 				// subtract 1 from $("td.datetally")
 				// if cell is zero, hide
 				$("#mytable tr").each(function() {
-
-					if($(this).is("." + datename)) {
+					if($(this).find("td." + datename).length != 0) {
 						var newtally = parseInt($(this).find("td.datetally").html()) - 1;
-						console.log(newtally);
 						$(this).find("td.datetally").html(newtally);
-						if(newtally == 0)  { $(this).hide(); }
+						if(newtally == 0)  { $(this).addClass("grayout"); }
 					}
 				});
 			} else  {
 				// show all the rows that have this date
-				$("." + datename).parent("tr").show();
+				$("#mytable tr").each(function() {
+					if($(this).find("td." + datename).length != 0) {
+						var newtally = parseInt($(this).find("td.datetally").html()) + 1;
+						$(this).find("td.datetally").html(newtally);
+						if(newtally > 0)  { $(this).removeClass("grayout"); }
+					}
+				});
 			}
 	});
 
@@ -83,7 +87,7 @@ function processTime(inpstr) {
 		return ""
 
 	dates = inpstr.split(/[0-9]/)[0];
-	dates = dates.split(/,/)
+	dates = dates.split(/[\s,]+/)
 
 	// date lookup table: monday = 1, tuesday = 2, etc
 	var datelookup = {
@@ -100,12 +104,15 @@ function processTime(inpstr) {
 		//console.log(this)	;
 		//console.log($.trim(this));	
 		//console.log($.trim(this).toLowerCase());	
-		processeddates.push(datelookup[$.trim(this).toUpperCase()]);
+		if($.trim(this).toUpperCase() in datelookup) {
+			processeddates.push(datelookup[$.trim(this).toUpperCase()]);
+		}
 
 	});
+//	console.log(processeddates);
+
 	if ( processeddates == null)
 		return "";
-//	console.log(processeddates);
 
 // append html
 
@@ -139,6 +146,9 @@ function processTime(inpstr) {
 	}
 
 	AppendHtml += "<td class='noborder'></td>";
+	//console.log(processeddates);
+//	console.log(processeddates.length);
+
 	AppendHtml += "<td class='noborder datetally'>" + processeddates.length + "</td>";
 	return AppendHtml;
 }
