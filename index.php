@@ -23,27 +23,38 @@ $(document).ready(function() {
 	$("input").click(function() {
 			var datename = $(this).attr("name");
 			var waschecked = this.checked;
-			if(!waschecked) {
-				// for each that's checked				
-				// iterate through each row
-				// subtract 1 from $("td.datetally")
-				// if cell is zero, hide
-				$("#mytable tr").each(function() {
-					if($(this).find("td." + datename).length != 0) {
-						var newtally = parseInt($(this).find("td.datetally").html()) - 1;
-						$(this).find("td.datetally").html(newtally);
-						if(newtally == 0)  { $(this).addClass("grayout"); }
-					}
-				});
-			} else  {
-				// show all the rows that have this date
-				$("#mytable tr").each(function() {
-					if($(this).find("td." + datename).length != 0) {
-						var newtally = parseInt($(this).find("td.datetally").html()) + 1;
-						$(this).find("td.datetally").html(newtally);
-						if(newtally > 0)  { $(this).removeClass("grayout"); }
-					}
-				});
+
+			if((datename == "grayouthide")) {
+				// hack to change the css of grayout
+				// so that if new elements have grayout added, this css style also affects them
+				if(waschecked) {
+					$("#stylediv").html('<style>.grayout { display:none; }</style>');
+				} else {
+					$("#stylediv").html('');
+				}	
+			} else {
+				if(!waschecked) {
+					// for each that's checked				
+					// iterate through each row
+					// subtract 1 from $("td.datetally")
+					// if cell is zero, hide
+					$("#mytable tr").each(function() {
+						if($(this).find("td." + datename).length != 0) {
+							var newtally = parseInt($(this).find("td.datetally").html()) - 1;
+							$(this).find("td.datetally").html(newtally);
+							if(newtally == 0)  { $(this).addClass("grayout"); }
+						}
+					});
+				} else  {
+					// show all the rows that have this date
+					$("#mytable tr").each(function() {
+						if($(this).find("td." + datename).length != 0) {
+							var newtally = parseInt($(this).find("td.datetally").html()) + 1;
+							$(this).find("td.datetally").html(newtally);
+							if(newtally > 0)  { $(this).removeClass("grayout"); }
+						}
+					});
+				}
 			}
 	});
 
@@ -261,7 +272,7 @@ caption {
 }
 
 .grayout {
-	opacity: 0.15;
+	opacity: 0.10;
 }
 
 .grayout td {
@@ -299,13 +310,18 @@ print $dataurl;
 ?>
 <div id="wrapper">
 <div id="sidebar" class=checkboxes>
-	<b>Show courses with dates on:</b>
+	<b>Show courses with any dates on:</b>
 <form>
     <input type="checkbox" name="date-M" checked="checked" /><span> Monday</span><br>
     <input type="checkbox" name="date-Tu" checked="checked" /><span> Tuesday</span><br>
     <input type="checkbox" name="date-W" checked="checked" /><span> Wednesday</span><br>
     <input type="checkbox" name="date-Th" checked="checked" /><span> Thursday</span><br>
     <input type="checkbox" name="date-F" checked="checked" /><span> Friday</span><br>
+</form>
+<br>
+<form>
+<span>Hide instead of graying-out</span><br>
+	<input type="checkbox" name="grayouthide"/>
 </form>
 </div>
 
@@ -322,7 +338,7 @@ foreach($html->find('[id=mytable]') as $element)
 ?>
 </div>
 </div>
-
+<div id="stylediv"></div>
 </body>
 </html>
 
