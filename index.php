@@ -6,18 +6,16 @@ $(document).ready(function() {
 	var querybefore = "'http://search.columbia.edu/search?&q=";
 	var queryafter = "&site=Directory_of_Classes&num=20&sort=date%3AD%3AL%3Ad1&filter=0&entqr=0&ud=1&output=xml_no_dtd&client=DoC&proxystylesheet=DoC&oe=UTF-8&ie=UTF-8&proxyreload=1'";
 	var ourDiv = $("#mytable tr").each(function() {
-	var thiscoursename = $(this).find("td:nth-child(2)");
-	thiscoursename.html("<b>" + thiscoursename.html() + "</b>");
-
-	var thiscourse = $(this).find("td:nth-child(9)");
-	thiscourse.html("<a href=" + querybefore + thiscourse.html() + queryafter + ">" + thiscourse.html() + "</a>");
-	
-	var thistime = $(this).find("td:nth-child(6)");
-	thistime.parent("tr").append(processTime(thistime.html()));
+		var thiscoursename = $(this).find("td:nth-child(2)");
+		thiscoursename.html("<b>" + thiscoursename.html() + "</b>");
 
 
-  
-  });
+		var thiscourse = $(this).find("td:nth-child(9)");
+		thiscourse.html("<a href=" + querybefore + thiscourse.html() + queryafter + ">" + thiscourse.html() + "</a>");
+		
+		var thistime = $(this).find("td:nth-child(6)");
+		thistime.parent("tr").append(processTime(thistime.html()));
+	});
 
 	$("#mytable tr").click(function() {
 		$(this).toggleClass("grayout");
@@ -25,10 +23,20 @@ $(document).ready(function() {
 	$("input").click(function() {
 			var datename = $(this).attr("name");
 			var waschecked = this.checked;
-			if(!waschecked)
-				$("." + datename).parent("tr").hide();
-			else 
+			if(!waschecked) {
+				// for each that's checked				
+				// iterate through each row
+				// subtract 1 from $("td.datetally")
+				// if cell is zero, hide
+				$("#mytable tr").each(function() {
+					var newtally = $("." + datename).parent("tr").find("td.datetally").html()  - 1;
+					$("." + datename).parent("tr").find("td.datetally").html(newtally) ;
+					if(newtally == 0)  { $("." + datename).parent("tr").hide(); }
+				});
+			} else  {
+				// show all the rows that have this date
 				$("." + datename).parent("tr").show();
+			}
 	});
 
 
@@ -41,7 +49,6 @@ function processTime(inpstr) {
 	if ( $.trim(inpstr) == '' )
 		return "";
 
-//	console.log(inpstr);
 	times = inpstr.match(/[0-9|:]+[ ]*[a|p]m/g);
 	if (times == null)
 		return "";
@@ -76,21 +83,25 @@ function processTime(inpstr) {
 
 	// date lookup table: monday = 1, tuesday = 2, etc
 	var datelookup = {
-		'M' : 1,
-		'Tu' : 2,
+		'<' : 1,
+		'TU' : 2,
 		'W' : 3,
-		'Th' : 4,
+		'TH' : 4,
 		'F' : 5
 	}
 	var processeddates = [];
 	$.each(dates, function() {
-	
-		processeddates.push(datelookup[$.trim(this)]);
+
+		//console.log("=========");
+		//console.log(this)	;
+		//console.log($.trim(this));	
+		//console.log($.trim(this).toLowerCase());	
+		processeddates.push(datelookup[$.trim(this).toUpperCase()]);
 
 	});
 	if ( processeddates == null)
 		return "";
-//	console.log(processeddates);
+	console.log(processeddates);
 
 // append html
 
@@ -124,6 +135,7 @@ function processTime(inpstr) {
 	}
 
 	AppendHtml += "<td class='noborder'></td>";
+	AppendHtml += "<td class='noborder datetally'>" + processeddates.length + "</td>";
 	return AppendHtml;
 }
 
@@ -259,7 +271,8 @@ if(!isset($_GET["url"]))  {
 
 <body>
 <base target="_new">
-<h2>Dan's GSAPP COURSE SCHEDULE PARSER - v0.0.1 super rough</h2>
+<h2>Dan's GSAPP COURSE SCHEDULE PARSER - v0.0.3 'still rough version' </h2>
+<h4><a href="https://github.com/provolot/gsappcourses">GitHub repo</a></h4>
 <form action="index.php" method="get">
 GSAPP course URL (example: <a href="<?php print $thisurl; ?>?url=http://www.arch.columbia.edu/courses/course-schedule/spring">http://www.arch.columbia.edu/courses/course-schedule/spring)</a><br>
 <input size=100 type="text" name="url" <?php if($dataurl) print "value='$dataurl'"; ?>>
