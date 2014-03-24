@@ -15,6 +15,10 @@ $(document).ready(function() {
 		
 		var thistime = $(this).find("td:nth-child(6)");
 		thistime.parent("tr").append(processTime(thistime.html()));
+
+		if($(this).find(".datetally").length == 0) {
+			$(this).addClass("nodate");
+		}
 	});
 
 //	$("#mytable tr").click(function() {
@@ -28,7 +32,7 @@ $(document).ready(function() {
 				// hack to change the css of grayout
 				// so that if new elements have grayout added, this css style also affects them
 				if(waschecked) {
-					$("#stylediv").html('<style>.grayout { display:none; }</style>');
+					$("#stylediv").html('<style>.grayout, .nodate { display:none; }</style>');
 				} else {
 					$("#stylediv").html('');
 				}	
@@ -277,7 +281,11 @@ caption {
 
 .grayout td {
 	border-color: white;
-}
+} 
+
+.datetally {
+	opacity:0.1;
+{
 
 
 </style>
@@ -320,7 +328,7 @@ print $dataurl;
 </form>
 <br>
 <form>
-<span>Hide instead of graying-out</span><br>
+<span>Hide dateless and hidden by filter</span><br>
 	<input type="checkbox" name="grayouthide"/>
 </form>
 </div>
