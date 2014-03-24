@@ -29,9 +29,13 @@ $(document).ready(function() {
 				// subtract 1 from $("td.datetally")
 				// if cell is zero, hide
 				$("#mytable tr").each(function() {
-					var newtally = $("." + datename).parent("tr").find("td.datetally").html()  - 1;
-					$("." + datename).parent("tr").find("td.datetally").html(newtally) ;
-					if(newtally == 0)  { $("." + datename).parent("tr").hide(); }
+
+					if($(this).is("." + datename)) {
+						var newtally = parseInt($(this).find("td.datetally").html()) - 1;
+						console.log(newtally);
+						$(this).find("td.datetally").html(newtally);
+						if(newtally == 0)  { $(this).hide(); }
+					}
 				});
 			} else  {
 				// show all the rows that have this date
@@ -83,7 +87,7 @@ function processTime(inpstr) {
 
 	// date lookup table: monday = 1, tuesday = 2, etc
 	var datelookup = {
-		'<' : 1,
+		'M' : 1,
 		'TU' : 2,
 		'W' : 3,
 		'TH' : 4,
@@ -101,7 +105,7 @@ function processTime(inpstr) {
 	});
 	if ( processeddates == null)
 		return "";
-	console.log(processeddates);
+//	console.log(processeddates);
 
 // append html
 
