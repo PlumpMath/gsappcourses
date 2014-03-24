@@ -1,7 +1,7 @@
 gsappcourses
 ============
 
-Adds a simple visualization graph to GSAPP courses. 
+Adds a simple visualization graph to GSAPP courses. HACKY but works.
 
 Working as of 2013-10-15. 
 
