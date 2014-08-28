@@ -1,0 +1,188 @@
+/* @override http://dantaeyoung.com/sites/gsappcourses/gsappcourses.css */
+
+body * {
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+a:link, a:visited {
+	color: #21a8b5;
+}
+
+a:hover{
+	color: #8edde5;	
+}
+body table {
+    font-size: 11px;
+}
+
+.yes {
+    background-color: #4DD7FA;
+}
+
+.yesday {
+    background-color: #D4F7AF;
+}
+
+table,th,td {
+    border: 1px solid #DDD;
+}
+
+table thead {
+    background-color: #eee;
+    color: #666;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.noborder {
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.highlightdate {
+    background-color: #3eece0 !important;
+	font-weight: bold !important;
+}
+
+.highlighttime {
+    background-color: #e4eb10 !important;
+	/*font-weight: bold !important;*/
+}
+
+#content {
+	width: 100%;
+}
+table {
+    /*padding-right: 300px !improtant;*/
+}
+.mytable {
+    font: 10px Arial,Helvetica,sans-serif;
+    text-transform: uppercase;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid #ebebeb;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.mytable td {
+    font: 10px arial,helvetica,sans-serif;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-top: 2px solid #000;
+    border-left: 2px solid #000;
+    background: #fff;
+    padding: 6px 3px;
+    color: #000;
+    text-transform: none;
+    text-align: center
+/*  word-break:  break-all !important; */;
+}
+
+td.timecell {
+	/*border-left: none;*/
+	border-right: 1px dotted #CCC !important;
+	padding: 0px 10px;
+	text-align:left;
+	color: #666 !important;
+}
+
+td.timecell .inner {
+	margin-left: -15px;
+	padding-right: 15px;
+}
+
+td.timecell .inner {
+	display:block;
+	/*border:  1px solid red;*/
+	text-align: center;
+}
+
+td.timecell .inner span {
+	display: block;
+	width: 100%;
+	/*border: 1px solid red;*/
+}
+
+td.timecell .hour {
+	/*float: left;*/
+}
+
+td.timecell .ampm {
+	font-size: 0.7em;
+}
+
+.mytable th {
+    font: bold 11px arial,helvetica,sans-serif;
+    color: #000;
+    border-top: 2px solid #000;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-left: 2px solid #000;
+    text-transform: none;
+    text-align: left;
+    padding: 6px 3px 6px 6px;
+    background: #f3f3f3;
+}
+
+.alltables {
+    width: 500px;
+}
+
+.checkboxes {
+    font: 10px helvetica,arial,sans-srif;
+}
+
+caption {
+    font-size: 20px;
+    font-weight: 700;
+    padding: 5px;
+    color: #fff;
+    background-color: #000;
+    margin-bottom: 10px;
+}
+
+#wrapper {
+    margin-left: 100px;
+}
+
+.dataurl {
+	font-weight: bold;
+	font-size: 1em;
+	/*margin-bottom: 10px;*/
+}
+
+#sidebar {
+    width: 90px;
+    padding: 5px;
+    position: fixed;
+    left: 0;
+    top: 150px;
+    background-color: #fff;
+}
+
+:checked + label {
+    font-weight: 700;
+    background-color: #3eece0;
+}
+
+form label {
+    cursor: pointer;
+}
+
+.mytable tr {
+/*	cursor:  pointer; */;
+}
+
+.grayout {
+    opacity: .1;
+}
+
+.grayout td {
+    border-color: #fff;
+}
+
+.datetally {
+    opacity: .1;
+
