@@ -5,7 +5,7 @@
 $(document).ready(function() {
 	var querybefore = "'http://search.columbia.edu/search?&q=";
 	var queryafter = "&site=Directory_of_Classes&num=20&sort=date%3AD%3AL%3Ad1&filter=0&entqr=0&ud=1&output=xml_no_dtd&client=DoC&proxystylesheet=DoC&oe=UTF-8&ie=UTF-8&proxyreload=1'";
-	var ourDiv = $("#mytable tr").each(function() {
+	var ourDiv = $(".mytable tr").each(function() {
 		var thiscoursename = $(this).find("td:nth-child(2)");
 		thiscoursename.html("<b>" + thiscoursename.html() + "</b>");
 
@@ -21,7 +21,7 @@ $(document).ready(function() {
 		}
 	});
 
-//	$("#mytable tr").click(function() {
+//	$(".mytable tr").click(function() {
 //		$(this).toggleClass("grayout");
 //	});
 	$("input").click(function() {
@@ -42,7 +42,7 @@ $(document).ready(function() {
 					// iterate through each row
 					// subtract 1 from $("td.datetally")
 					// if cell is zero, hide
-					$("#mytable tr").each(function() {
+					$(".mytable tr").each(function() {
 						if($(this).find("td." + datename).length != 0) {
 							var newtally = parseInt($(this).find("td.datetally").html()) - 1;
 							$(this).find("td.datetally").html(newtally);
@@ -51,7 +51,7 @@ $(document).ready(function() {
 					});
 				} else  {
 					// show all the rows that have this date
-					$("#mytable tr").each(function() {
+					$(".mytable tr").each(function() {
 						if($(this).find("td." + datename).length != 0) {
 							var newtally = parseInt($(this).find("td.datetally").html()) + 1;
 							$(this).find("td.datetally").html(newtally);
@@ -102,7 +102,7 @@ function processTime(inpstr) {
 		return ""
 
 	dates = inpstr.split(/[0-9]/)[0];
-	dates = dates.split(/[\s,]+/)
+	dates = dates.split(/[\s,\/]+/)
 
 	// date lookup table: monday = 1, tuesday = 2, etc
 	var datelookup = {
@@ -210,7 +210,7 @@ table thead {
 .highlighttime {
 	background-color: pink !important;
 }
-#mytable {
+.mytable {
     font: 10px Arial, Helvetica, sans-serif;
     text-transform: uppercase;
     width: 100%;
@@ -220,7 +220,7 @@ table thead {
 	border-spacing:0;
   border-collapse:collapse;
 }
-#mytable td {
+.mytable td {
 	font: 10px "arial", helvetica, snas-serif;
     border-right: 2px solid #000;
     border-bottom: 2px solid #000;
@@ -233,7 +233,7 @@ table thead {
     text-align: center;
   /*  word-break: break-all !important; */
 }
-#mytable th {
+.mytable th {
     font: bold 11px "arial", helvetica, sans-serif;
     color: #000000;
     border-top: 2px solid #000;
@@ -260,19 +260,23 @@ caption {
 	margin-bottom: 10px;
 }
 
-#content {
-	padding-left: 100px;
+#content, #header {
+	margin-left: 100px;
 }
 
-#sidebar {width:90px; padding:5px; position:fixed; left:0; top:100; background-color: white}
+#sidebar {width:90px; padding:5px; position:fixed; left:0; top:150; background-color: white}
 
-:checked + span {
+:checked + label {
 	font-weight: bold;
 	background-color: cyan;
 }
 
-#mytable tr {
+form label {
 	cursor: pointer;
+}
+
+.mytable tr {
+/*	cursor: pointer; */
 }
 
 .grayout {
@@ -304,32 +308,34 @@ if(!isset($_GET["url"]))  {
 
 <body>
 <base target="_new">
-<h2>Dan's GSAPP COURSE SCHEDULE PARSER - v0.0.3 'still rough version' </h2>
-<h4><a href="https://github.com/provolot/gsappcourses">GitHub repo</a></h4>
-<form action="index.php" method="get">
-GSAPP course URL (example: <a href="<?php print $thisurl; ?>?url=http://www.arch.columbia.edu/courses/course-schedule/spring">http://www.arch.columbia.edu/courses/course-schedule/spring)</a><br>
-<input size=100 type="text" name="url" <?php if($dataurl) print "value='$dataurl'"; ?>>
-<input type="submit" value="Submit">
-</form>
-<?php
-//print $md5str;
-if($dataurl) {
-print $dataurl;
+<div id="header">
+	<h2>Dan's GSAPP COURSE SCHEDULE PARSER - v0.0.4 (version "wow, this still works!") </h2>
+	<h4><a href="https://github.com/provolot/gsappcourses">Github</a></h4>
+	<form action="index.php" method="get">
+	GSAPP course URL (example: <a href="<?php print $thisurl; ?>?url=http://www.arch.columbia.edu/courses/course-schedule/spring">http://www.arch.columbia.edu/courses/course-schedule/spring)</a><br>
+	<input size=100 type="text" name="url" <?php if($dataurl) print "value='$dataurl'"; ?>>
+	<input type="submit" value="Submit">
+	</form>
+	<?php
+	//print $md5str;
+	if($dataurl) {
+	print $dataurl;
 ?>
+</div>
 <div id="wrapper">
 <div id="sidebar" class=checkboxes>
 	<b>Show courses with any dates on:</b>
 <form>
-    <input type="checkbox" name="date-M" checked="checked" /><span> Monday</span><br>
-    <input type="checkbox" name="date-Tu" checked="checked" /><span> Tuesday</span><br>
-    <input type="checkbox" name="date-W" checked="checked" /><span> Wednesday</span><br>
-    <input type="checkbox" name="date-Th" checked="checked" /><span> Thursday</span><br>
-    <input type="checkbox" name="date-F" checked="checked" /><span> Friday</span><br>
+    <input type="checkbox" name="date-M" id="date-M" checked="checked" /><label for="date-M"> Monday</label><br>
+    <input type="checkbox" name="date-Tu" id="date-Tu" checked="checked" /><label for="date-Tu"> Tuesday</label><br>
+    <input type="checkbox" name="date-W" id="date-W" checked="checked" /><label for="date-W"> Wednesday</label><br>
+    <input type="checkbox" name="date-Th" id="date-Th" checked="checked" /><label for="date-Th"> Thursday</label><br>
+    <input type="checkbox" name="date-F" id="date-F" checked="checked" /><label for="date-F"> Friday</label><br>
 </form>
 <br>
 <form>
-<span>Hide dateless and hidden by filter</span><br>
-	<input type="checkbox" name="grayouthide"/>
+<span>Hide rows instead of graying out</span><br>
+	<input type="checkbox" name="grayouthide" checked="checked"/>
 </form>
 </div>
 
@@ -338,9 +344,8 @@ print $dataurl;
 <?php 
 $html = file_get_html($dataurl);
 
-foreach($html->find('[id=mytable]') as $element) 
+foreach($html->find('[class=mytable]') as $element) 
        echo $element . '<br>';
-
 }
 
 ?>
