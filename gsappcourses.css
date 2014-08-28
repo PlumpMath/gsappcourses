@@ -175,6 +175,10 @@ form label {
 /*	cursor:  pointer; */;
 }
 
+.mytable tr td a {
+	font-weight: bold;
+}
+
 .grayout {
     opacity: .1;
 }
