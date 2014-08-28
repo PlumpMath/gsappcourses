@@ -41,7 +41,7 @@ if(!isset($_GET["url"]))  {
 				<h2>Dan's GSAPP COURSE SCHEDULE PARSER - v0.0.4 (version "wow, this still works!") </h2>
 				<h4><a href="https://github.com/provolot/gsappcourses">Github</a></h4>
 				<form action="index.php" method="get">
-					GSAPP course URL (example: <a href="<?php print $thisurl; ?>?url=http://www.arch.columbia.edu/courses/course-schedule/spring">http://www.arch.columbia.edu/courses/course-schedule/spring)</a><br>
+					GSAPP course URL to scrape from (example: <a href="<?php print $thisurl; ?>?url=http://www.arch.columbia.edu/courses/course-schedule/spring">http://www.arch.columbia.edu/courses/course-schedule/spring)</a><br>
 					<input class="dataurl" size=100 type="text" name="url" <?php if($dataurl) print "value='$dataurl'"; ?>>
 					<input type="submit" value="Submit">
 				</form>
